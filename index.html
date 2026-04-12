@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Task Board</title>
-</head>
 
+</head>
 <body>
+
     <header>
         <h1>Kanban Board</h1>
         <div>
@@ -22,7 +23,24 @@
     </header>
 
     <main>
-        
+        <section id="todo" class="column">
+            <h2>To Do</h2>
+            <ul class="task-list" id="list-todo"></ul>
+            <button class="btn-add" data-column="todo">+ Add Task</button>
+        </section>
+
+        <section id="inprogress" class="column">
+            <h2>In Progress</h2>
+            <ul class="task-list" id="list-inprogress"></ul>
+            <button class="btn-add" data-column="inprogress">+ Add Task</button>
+        </section>
+
+        <section id="done" class="column">
+            <h2>Done</h2>
+            <ul class="task-list" id="list-done">
+            <button class="btn-add" data-column="done">+ Add Task</button>
+            </ul>
+        </section>
     </main>
 
     <div>
