@@ -9,7 +9,7 @@
 <body>
 
     <header>
-        <h1>Kanban Board</h1>
+        <h1>Kanban Board 0</h1>
         <div>
             <label for="filter-priority">Filter Priority: </label>
             <select>
@@ -22,7 +22,7 @@
         </div>
     </header>
 
-    <main>
+    <main class="board">
         <section id="todo" class="column">
             <h2>To Do</h2>
             <ul class="task-list" id="list-todo"></ul>
@@ -37,14 +37,39 @@
 
         <section id="done" class="column">
             <h2>Done</h2>
-            <ul class="task-list" id="list-done">
+            <ul class="task-list" id="list-done"></ul>
             <button class="btn-add" data-column="done">+ Add Task</button>
             </ul>
         </section>
     </main>
 
-    <div>
-        
+    <div id="modal-overlay" class="modal-overlay is-hidden">
+        <div class="modal">
+            <h3 id="modal-title-text">Add New Task</h3>
+            <input type="hidden" id="task-id-input">
+            <input type="hidden" id="column-id-input">
+            
+            <label>Title</label>
+            <input type="text" id="input-title" placeholder="Task Title">
+            
+            <label>Description</label>
+            <textarea id="input-desc" placeholder="Task details..."></textarea>
+            
+            <label>Priority</label>
+            <select id="input-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+
+            <label>Due Date</label>
+            <input type="date" id="input-date">
+
+            <div class="modal-actions">
+                <button id="btn-modal-cancel">Cancel</button>
+                <button id="btn-modal-save">Save Task</button>
+            </div>
+        </div>
     </div>
 
 </body>
