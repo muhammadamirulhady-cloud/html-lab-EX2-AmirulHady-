@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Task Board</title>
-
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <h1>Kanban Board 0</h1>
-        <div>
+        <h1>Kanban Board <span id="task-counter" class="badge">0</span></h1>
+        <div class="controls">
             <label for="filter-priority">Filter Priority: </label>
             <select>
                 <option value="all">All</option>
@@ -39,7 +39,6 @@
             <h2>Done</h2>
             <ul class="task-list" id="list-done"></ul>
             <button class="btn-add" data-column="done">+ Add Task</button>
-            </ul>
         </section>
     </main>
 
