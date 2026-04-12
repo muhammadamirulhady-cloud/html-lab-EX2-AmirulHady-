@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-    <meta charset="UFT-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Task Board</title>
 </head>
 
 <body>
     <header>
-        
+        <h1>Kanban Board</h1>
+        <div>
+            <label for="filter-priority">Filter Priority: </label>
+            <select>
+                <option value="all">All</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button id="btn-clear-done">Clear Done</button> 
+        </div>
     </header>
 
     <main>
