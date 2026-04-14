@@ -114,3 +114,53 @@ function updateTask(taskId, updatedData) {
     }
 }
 
+// Event Delegation: One listener on <ul> to handle all card button clicks
+document.querySelectorAll('.task-list').forEach(list => {
+    list.addEventListener('click', (e) => {
+        const action = e.target.getAttribute('data-action');
+        const id = parseInt(e.target.getAttribute('data-id'));
+        if (!action || !id) return;
+
+        if (action === 'delete') deleteTask(id);
+        if (action === 'edit') editTask(id);
+    });
+});
+
+// Inline Editing: Swaps span for input
+function handleInlineEdit(element, id) {
+    const originalText = element.textContent;
+    const input = document.createElement('input');
+    input.value = originalText;
+
+    const commit = () => {
+        const newTitle = input.value.trim() || originalText;
+        element.textContent = newTitle;
+        const task = tasks.find(t => t.id === id);
+        if (task) task.title = newTitle;
+        input.replaceWith(element);
+    };
+
+    input.addEventListener('blur', commit);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') commit(); });
+
+    element.replaceWith(input);
+    input.focus();
+}
+
+// Priority Filter: Uses classList.toggle as requested
+priorityFilter.addEventListener('change', (e) => {
+    const val = e.target.value;
+    document.querySelectorAll('.task-card').forEach(card => {
+        const matches = val === 'all' || card.getAttribute('data-priority') === val;
+        card.classList.toggle('is-hidden', !matches);
+    });
+});
+
+// Clear Done: Staggered removal using 100ms intervals
+document.getElementById('btn-clear-done').addEventListener('click', () => {
+    const doneCards = document.querySelectorAll('#list-done .task-card');
+    doneCards.forEach((card, index) => {
+        const id = parseInt(card.getAttribute('data-id'));
+        setTimeout(() => deleteTask(id), index * 100);
+    });
+});
