@@ -25,6 +25,7 @@ function createTaskCard(taskObj) {
     const title = document.createElement('span');
     title.classList.add('task-title');
     title.textContent = taskObj.title;
+    title.addEventListener('click', () => {handleInlineEdit(title, taskObj.id);})
 
     // Description
     const desc = document.createElement('p');
@@ -163,4 +164,38 @@ document.getElementById('btn-clear-done').addEventListener('click', () => {
         const id = parseInt(card.getAttribute('data-id'));
         setTimeout(() => deleteTask(id), index * 100);
     });
+});
+
+document.querySelectorAll('.btn-add').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const col = btn.getAttribute('data-column');
+        document.getElementById('modal-title-text').textContent = "Add New Task";
+        document.getElementById('column-id-input').value = col;
+        document.getElementById('task-id-input').value = '';
+        document.getElementById('input-title').value = '';
+        document.getElementById('input-desc').value = '';
+        taskModal.classList.remove('is-hidden');
+    });
+});
+
+document.getElementById('btn-modal-cancel').addEventListener('click', () => {
+    taskModal.classList.add('is-hidden');
+});
+
+document.getElementById('btn-modal-save').addEventListener('click', () => {
+    const id = document.getElementById('task-id-input').value;
+    const col = document.getElementById('column-id-input').value;
+    const data = {
+        title: document.getElementById('input-title').value,
+        description: document.getElementById('input-desc').value,
+        priority: document.getElementById('input-priority').value,
+        dueDate: document.getElementById('input-date').value
+    };
+
+    if (id) {
+        updateTask(parseInt(id), data);
+    } else {
+        addTask(col, { id: ++taskIdCounter, ...data });
+    }
+    taskModal.classList.add('is-hidden');
 });
