@@ -89,6 +89,7 @@ function editTask(taskId) {
     const task = tasks.find(t => t.id === taskId);
     if (!task) return;
 
+    // Populate the modal inputs with the current values from the 'tasks' array
     document.getElementById('modal-title-text').textContent = "Edit Task";
     document.getElementById('task-id-input').value = task.id;
     document.getElementById('input-title').value = task.title;
@@ -96,7 +97,7 @@ function editTask(taskId) {
     document.getElementById('input-priority').value = task.priority;
     document.getElementById('input-date').value = task.dueDate;
     
-    taskModal.classList.remove('is-hidden');
+    taskModal.classList.remove('is-hidden'); // Show the modal
 }
 
 /* Updates the task array and replaces the DOM card with updated content. */
@@ -122,6 +123,7 @@ document.querySelectorAll('.task-list').forEach(list => {
         const id = parseInt(e.target.getAttribute('data-id'));
         if (!action || !id) return;
 
+        // Route the click to the correct function
         if (action === 'delete') deleteTask(id);
         if (action === 'edit') editTask(id);
     });
@@ -134,18 +136,18 @@ function handleInlineEdit(element, id) {
     input.value = originalText;
 
     const commit = () => {
-        const newTitle = input.value.trim() || originalText;
+        const newTitle = input.value.trim() || originalText; // Revert to old text if input is empty
         element.textContent = newTitle;
         const task = tasks.find(t => t.id === id);
-        if (task) task.title = newTitle;
-        input.replaceWith(element);
+        if (task) task.title = newTitle; // Update the title in the data array
+        input.replaceWith(element); // Swap back to normal text
     };
 
     input.addEventListener('blur', commit);
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') commit(); });
 
     element.replaceWith(input);
-    input.focus();
+    input.focus(); // Immediately put the cursor inside the new input box
 }
 
 // Priority Filter: Uses classList.toggle as requested
@@ -157,7 +159,7 @@ priorityFilter.addEventListener('change', (e) => {
     });
 });
 
-// Clear Done: Staggered removal using 100ms intervals
+// Clear Done: Removes cards one by one with a slight delay
 document.getElementById('btn-clear-done').addEventListener('click', () => {
     const doneCards = document.querySelectorAll('#list-done .task-card');
     doneCards.forEach((card, index) => {
@@ -185,6 +187,8 @@ document.getElementById('btn-modal-cancel').addEventListener('click', () => {
 document.getElementById('btn-modal-save').addEventListener('click', () => {
     const id = document.getElementById('task-id-input').value;
     const col = document.getElementById('column-id-input').value;
+
+    // Collect all data from the modal form inputs
     const data = {
         title: document.getElementById('input-title').value,
         description: document.getElementById('input-desc').value,
@@ -193,9 +197,9 @@ document.getElementById('btn-modal-save').addEventListener('click', () => {
     };
 
     if (id) {
-        updateTask(parseInt(id), data);
+        updateTask(parseInt(id), data); // If an ID exists, edit an existing task
     } else {
-        addTask(col, { id: ++taskIdCounter, ...data });
+        addTask(col, { id: ++taskIdCounter, ...data }); // If no ID exists, create a new task and increment the counter
     }
     taskModal.classList.add('is-hidden');
 });
